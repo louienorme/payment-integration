@@ -1,9 +1,16 @@
+import { Payments } from 'pages';
+import { BrowserRouter as Router, Route, Routes as Switch } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div>
-      
-    </div>
+      <Router>
+          <Switch>
+              <Route
+                path='/'
+                Component={Payments}
+              />
+          </Switch>
+      </Router>
   )
 }
 
