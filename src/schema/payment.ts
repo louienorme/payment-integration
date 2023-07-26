@@ -11,6 +11,7 @@ export const paymentSchema = Yup.object().shape({
     paymentDetails: Yup.object().shape({
         type: Yup.string().required('This is a required field'),
         bank: Yup.string().required('This is a required field'),
+        account: Yup.number().required('This is a required field'),
     }),
     billingInformation: Yup.object().shape({
         address: Yup.object().shape({

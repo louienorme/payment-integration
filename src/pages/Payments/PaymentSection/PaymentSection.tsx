@@ -11,6 +11,7 @@ import {
 import { Formik, Form, Field, FieldArray } from "formik"
 import { TextField } from "formik-material-ui"
 import { paymentSchema } from "schema"
+import { createPayment } from "services"
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({  
@@ -48,26 +49,54 @@ const PaymentSection = () => {
 
     const currencies = [
         'PHP',
-        'USD',
-        'YEN'
     ]
 
-    const handleSubmit = () => {
-        try {
-
+    const handleSubmit = async (data: any) => {
+        try {   
+            console.log(123)
+            console.log(data)
+            // const response = await createPayment(data)
+            // console.log(response)
         } catch (err) {
-
+            console.error(err)
         }
+    }
+
+    const initialValues = {
+        amount: '',
+        currency: 'PHP',
+        customerDetails: {
+            email: '',
+            phone: '',
+            name: ''
+        },
+        paymentDetails: {
+            type: '',
+            bank: '',
+            account: ''
+        },
+        billingInformation: {
+            address: {
+                city: '',
+                country: '',
+                houseNumber: '',
+                street: '',
+                postalCode: '',
+                state: ''
+            }
+        }
+
     }
 
     return (
         <Formik
-            initialValues={paymentSchema}
+            initialValues={initialValues}
             validationSchema={paymentSchema}
             onSubmit={handleSubmit}
             className={classes.header}
         >
             <Form>
+                {/* Payment */}    
                 <Typography gutterBottom variant="h4">
                     Payment
                 </Typography>
@@ -86,7 +115,7 @@ const PaymentSection = () => {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl className={classes.control}>
                             <FieldArray 
-                                name={`currency`}
+                                name='currency'
                                 render={() => (
                                     <Field
                                         component={TextField}    
@@ -94,7 +123,7 @@ const PaymentSection = () => {
                                         required
                                         select
                                         autoFocus
-                                        name={`currency`}
+                                        name='currency'
                                         label='Currency'
                                         fullWidth
                                     >
@@ -109,6 +138,7 @@ const PaymentSection = () => {
                         </FormControl>  
                     </Grid>
                 </Grid>
+                {/* Customer Details */}    
                 <Typography gutterBottom variant="h4">
                     Customer Details
                 </Typography>
@@ -146,6 +176,7 @@ const PaymentSection = () => {
                         />
                     </Grid>
                 </Grid>
+                {/* Payment Method */}                          
                 <Typography gutterBottom variant="h4">
                     Payment Method
                 </Typography>
@@ -154,7 +185,7 @@ const PaymentSection = () => {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl className={classes.control}>
                             <FieldArray 
-                                name={`paymentDetails.type`}
+                                name='paymentDetails'
                                 render={() => (
                                     <Field
                                         component={TextField}    
@@ -179,7 +210,7 @@ const PaymentSection = () => {
                     <Grid item xs={12} sm={6} md={6}>
                     <FormControl className={classes.control}>
                             <FieldArray 
-                                name={`paymentDetails.bank`}
+                                name='paymentDetails'
                                 render={() => (
                                     <Field
                                         component={TextField}    
@@ -201,7 +232,18 @@ const PaymentSection = () => {
                             />
                         </FormControl>
                     </Grid>
+                    <Grid item xs={12} sm={6} md={6}>
+                        <Field
+                            component={TextField}
+                            variant='outlined'    
+                            fullWidth
+                            required
+                            name='paymentDetails.account'
+                            label='Account Number'
+                        />
+                    </Grid>
                 </Grid>
+                {/* Billing Information */}    
                 <Typography gutterBottom variant="h4">
                     Billing Information
                 </Typography>
