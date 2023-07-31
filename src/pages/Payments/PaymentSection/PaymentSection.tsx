@@ -11,7 +11,7 @@ import {
 import { Formik, Form, Field, FieldArray } from "formik"
 import { TextField } from "formik-material-ui"
 import { paymentSchema } from "schema"
-import { createPayment } from "services"
+import { attachPaymentIntent, createPaymentIntent, createPaymentMethod } from "services"
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({  
@@ -36,15 +36,15 @@ const PaymentSection = () => {
     const classes = useStyles()
 
     const methods = [
-        'E-Pay',
-        "Bank Transfer"
+        'paymaya',
+        "card"
     ]
 
     const banks = [
-        'GCash',
-        'PayMaya',
-        'BDO',
-        'ChinaBank'
+        'gcash',
+        'paymaya',
+        'bdo',
+        'chinabank'
     ]
 
     const currencies = [
@@ -53,10 +53,12 @@ const PaymentSection = () => {
 
     const handleSubmit = async (data: any) => {
         try {   
-            console.log(123)
-            console.log(data)
-            // const response = await createPayment(data)
-            // console.log(response)
+            // console.log(data)
+            // const response = await createPaymentIntent(data)
+            // const response = await createPaymentMethod(data)
+            const response = await attachPaymentIntent(data)
+
+            console.log(response)
         } catch (err) {
             console.error(err)
         }
