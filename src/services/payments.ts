@@ -177,9 +177,11 @@ export const createCheckoutSession = async (body: any) => {
       data: {
         data: {
           attributes: {
-            send_email_receipt: true,
+            send_email_receipt: false, // enable when goes live
             show_description: true,
             show_line_items: true,
+            cancel_url: 'https://www.google.com/',
+            success_url: 'https://www.google.com/',
             ...newBody,
           },
         },
@@ -187,7 +189,17 @@ export const createCheckoutSession = async (body: any) => {
     };
 
     const response = await axios.request(options);
-    console.log(response);
+    // Store Checkout Session object's ID
+
+    return { code: response.status, data: response.data };
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const receiveWebhook = async (body?: any) => {
+  try {
+    const response = await axios.post('http://localhost:3000/api/webhook');
 
     return { code: response.status, data: response.data };
   } catch (err) {

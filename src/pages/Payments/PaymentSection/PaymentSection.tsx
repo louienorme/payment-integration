@@ -17,6 +17,7 @@ import {
   createPaymentIntent,
   createPaymentMethod,
   getPaymentMethod,
+  receiveWebhook,
 } from 'services';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,8 +56,6 @@ const PaymentSection = () => {
       // const response = await attachPaymentIntent(data);
       // const response = await getPaymentMethod(data);
       const response = await createCheckoutSession(data);
-
-      console.log(response);
       //@ts-ignore
       if (response.code === 200)
         window.open(response?.data.data.attributes.checkout_url, '_blank');
