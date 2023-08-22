@@ -156,7 +156,7 @@ export const createCheckoutSession = async (body: any) => {
       // Add Items here
       line_items: [
         {
-          amount: 2000.0,
+          amount: 20000,
           currency: 'PHP',
           description: 'some desc',
           images: ['https://picsum.photos/200/300'],
@@ -180,8 +180,8 @@ export const createCheckoutSession = async (body: any) => {
             send_email_receipt: false, // enable when goes live
             show_description: true,
             show_line_items: true,
-            cancel_url: 'https://www.google.com/',
-            success_url: 'https://www.google.com/',
+            cancel_url: 'https://payment-test-ptmc.onrender.com/',
+            success_url: 'https://payment-test-ptmc.onrender.com/',
             ...newBody,
           },
         },
@@ -190,7 +190,7 @@ export const createCheckoutSession = async (body: any) => {
 
     const response = await axios.request(options);
     // Store Checkout Session object's ID
-
+    console.log(response);
     return { code: response.status, data: response.data };
   } catch (err) {
     console.error(err);
