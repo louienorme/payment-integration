@@ -197,6 +197,26 @@ export const createCheckoutSession = async (body: any) => {
   }
 };
 
+export const getCheckoutSession = async (id: string) => {
+  try {
+    const options = {
+      method: 'GET',
+      url: `https://api.paymongo.com/v1/checkout_sessions/${id}`,
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        authorization: `Basic ${btoa(`${paymongoSecretKey}`)}`,
+      },
+    };
+
+    const response = await axios.request(options);
+
+    return { code: response.status, data: response.data };
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const receiveWebhook = async (body?: any) => {
   try {
     const response = await axios.post('http://localhost:3000/api/webhook');

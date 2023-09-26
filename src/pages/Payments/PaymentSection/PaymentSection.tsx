@@ -16,6 +16,7 @@ import {
   createCheckoutSession,
   createPaymentIntent,
   createPaymentMethod,
+  getCheckoutSession,
   getPaymentMethod,
   receiveWebhook,
 } from 'services';
@@ -56,9 +57,13 @@ const PaymentSection = () => {
       // const response = await attachPaymentIntent(data);
       // const response = await getPaymentMethod(data);
       const response = await createCheckoutSession(data);
+      console.log(response?.data.data.id);
+      const res = await getCheckoutSession(response?.data.data.id);
       //@ts-ignore
       if (response.code === 200)
         window.open(response?.data.data.attributes.checkout_url, '_blank');
+
+      console.log(res);
     } catch (err) {
       console.error(err);
     }
